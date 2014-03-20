@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{90F3F3D2-F834-4D92-82CB-DC396C678654}</ProjectGuid>
     <Compiler>DMD2</Compiler>
@@ -12,7 +12,7 @@
     <IncrementalLinking>true</IncrementalLinking>
     <Includes>
       <Includes>
-        <Path>$solution/TribesAscendSDK</Path>
+        <Path>$solution\TribesAscendSDK</Path>
       </Includes>
     </Includes>
   </PropertyGroup>
@@ -25,6 +25,7 @@
     <UnittestMode>false</UnittestMode>
     <ObjectsDirectory>obj\Debug</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
+    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\lib\</OutputPath>
@@ -34,6 +35,7 @@
     <UnittestMode>false</UnittestMode>
     <ObjectsDirectory>obj\Release</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
+    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MaterialExpressionDeriveNormalZ.d" />

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AB961FDF-9F40-4D37-B622-B3F05A136C95}</ProjectGuid>
     <Compiler>DMD2</Compiler>
@@ -28,6 +28,7 @@
         <Lib>../lib/psapi.lib</Lib>
       </Libs>
     </Libs>
+    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>
@@ -37,6 +38,15 @@
     <UnittestMode>false</UnittestMode>
     <ObjectsDirectory>obj\Release</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
+    <Libs>
+      <Libs>
+        <Lib>Advapi32.lib</Lib>
+        <Lib>Kernel32.lib</Lib>
+        <Lib>User32.lib</Lib>
+        <Lib>../lib/psapi.lib</Lib>
+      </Libs>
+    </Libs>
+    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.d" />

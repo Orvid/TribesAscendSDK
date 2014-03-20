@@ -3,13 +3,35 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D58B268B-D058-4F1F-9F8D-740FD96C97CF}</ProjectGuid>
     <Compiler>DMD2</Compiler>
     <PreferOneStepBuild>true</PreferOneStepBuild>
     <UseDefaultCompiler>true</UseDefaultCompiler>
     <IncrementalLinking>true</IncrementalLinking>
+    <DependentProjectIds>
+      <DependentProjectIds>
+        <String>{9AF6119D-F6CB-407D-BCCB-BC06BF2476BB}</String>
+        <String>{A795EA5D-C190-4C12-BF71-BC9CC7D444CA}</String>
+        <String>{90F3F3D2-F834-4D92-82CB-DC396C678654}</String>
+        <String>{856A8B1D-4CD2-43ED-B906-978536367FA2}</String>
+        <String>{E30BEA82-9A3F-405F-9833-69DA94183C16}</String>
+        <String>{8E775D1A-596A-4A26-89DB-92F85F721AD5}</String>
+        <String>{EDC0460C-4AE1-4085-82A8-15DBC8132750}</String>
+        <String>{616FE055-A938-4F37-81E9-684291755039}</String>
+        <String>{21CAEAFF-D0D1-49DE-9A86-F42D62DBDF80}</String>
+        <String>{C894C4F5-AE3B-4AD7-B47E-FF70128EF461}</String>
+        <String>{4B273231-088D-4BEE-822F-F4A7B875847F}</String>
+        <String>{BA4024EA-93C4-4A11-B887-F4F918BE71B6}</String>
+        <String>{478C785A-5661-426D-9660-AF9DF9DBD7D6}</String>
+        <String>{77B194F3-D905-4B2B-BA17-AC85EE7749D6}</String>
+        <String>{3C5455BD-4463-4F59-BEB7-F5415773E4DC}</String>
+        <String>{E3880723-AE5D-4109-A433-5EC0B038FFBF}</String>
+        <String>{BC4EE21F-9D85-4AC8-81DF-E16F77288936}</String>
+        <String>{74155233-8AA9-4A14-9AF3-636600991B4A}</String>
+      </DependentProjectIds>
+    </DependentProjectIds>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,27 +46,10 @@
       <Libs>
         <Lib>Kernel32.lib</Lib>
         <Lib>../lib/psapi.lib</Lib>
-        <Lib>lib/Core.lib</Lib>
-        <Lib>lib/EngineA.lib</Lib>
-        <Lib>lib/EngineB.lib</Lib>
-        <Lib>lib/EngineC.lib</Lib>
-        <Lib>lib/GameFramework.lib</Lib>
-        <Lib>lib/GFxUI.lib</Lib>
-        <Lib>lib/GFxUIEditor.lib</Lib>
-        <Lib>lib/IpDrv.lib</Lib>
-        <Lib>lib/OnlineSubsystemMcts.lib</Lib>
-        <Lib>lib/PlatformCommon.lib</Lib>
-        <Lib>lib/TribesGameA.lib</Lib>
-        <Lib>lib/TribesGameB.lib</Lib>
-        <Lib>lib/TribesGameC.lib</Lib>
-        <Lib>lib/UDKBase.lib</Lib>
-        <Lib>lib/UnrealEd.lib</Lib>
-        <Lib>lib/UTGame.lib</Lib>
-        <Lib>lib/WinDrv.lib</Lib>
-        <Lib>lib/XAudio2.lib</Lib>
       </Libs>
     </Libs>
     <ExtraCompilerArguments>-gs</ExtraCompilerArguments>
+    <LinkinThirdPartyLibraries>true</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>
@@ -58,36 +63,10 @@
       <Libs>
         <Lib>Kernel32.lib</Lib>
         <Lib>../lib/psapi.lib</Lib>
-        <Lib>lib/Core.lib</Lib>
-        <Lib>lib/EngineA.lib</Lib>
-        <Lib>lib/EngineB.lib</Lib>
-        <Lib>lib/EngineC.lib</Lib>
-        <Lib>lib/GameFramework.lib</Lib>
-        <Lib>lib/GFxUI.lib</Lib>
-        <Lib>lib/GFxUIEditor.lib</Lib>
-        <Lib>lib/IpDrv.lib</Lib>
-        <Lib>lib/OnlineSubsystemMcts.lib</Lib>
-        <Lib>lib/PlatformCommon.lib</Lib>
-        <Lib>lib/TribesGameA.lib</Lib>
-        <Lib>lib/TribesGameB.lib</Lib>
-        <Lib>lib/TribesGameC.lib</Lib>
-        <Lib>lib/UDKBase.lib</Lib>
-        <Lib>lib/UnrealEd.lib</Lib>
-        <Lib>lib/UTGame.lib</Lib>
-        <Lib>lib/WinDrv.lib</Lib>
-        <Lib>lib/XAudio2.lib</Lib>
       </Libs>
     </Libs>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Unittest</OutputPath>
-    <Externalconsole>true</Externalconsole>
-    <Target>SharedLibrary</Target>
-    <OutputName>TribesAscendSDK</OutputName>
-    <UnittestMode>true</UnittestMode>
-    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
-    <DebugLevel>0</DebugLevel>
+    <ExtraCompilerArguments>-gs</ExtraCompilerArguments>
+    <LinkinThirdPartyLibraries>true</LinkinThirdPartyLibraries>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="dllmain.d" />
