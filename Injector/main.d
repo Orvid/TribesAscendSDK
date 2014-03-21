@@ -1,9 +1,9 @@
 module dllmain;
 
-private import core.sys.windows.windows;
-private import core.sys.windows.dll;
-private import std.conv;
-private import std.stdio;
+import core.sys.windows.windows;
+import core.sys.windows.dll;
+import std.conv;
+import std.stdio;
 
 extern(Windows)
 {
@@ -17,15 +17,11 @@ extern(Windows)
 		LONG tpDeltaPri;
 		DWORD dwFlags;
 	}
-	alias THREADENTRY32* PTHREADENTRY32;
-	alias PTHREADENTRY32 LPTHREADENTRY32;
 	struct TOKEN_PRIVILEGES
 	{
 		DWORD PrivilegeCount;
 		LUID_AND_ATTRIBUTES Privileges[1];
 	}
-	alias TOKEN_PRIVILEGES* PTOKEN_PRIVILEGES;
-	alias PTOKEN_PRIVILEGES LPTOKEN_PRIVILEGES;
 	struct LUID_AND_ATTRIBUTES
 	{
 		LUID Luid;
@@ -36,28 +32,22 @@ extern(Windows)
 		DWORD LowPart;
 		LONG HighPart;
 	}
-	alias LUID* PLUID;
-	alias PLUID LPLUID;
 
-	BOOL AdjustTokenPrivileges(HANDLE TokenHandle, BOOL DisableAllPrivileges, PTOKEN_PRIVILEGES NewState, DWORD BufferLength, PTOKEN_PRIVILEGES PreviousState, PDWORD ReturnLength);
+	BOOL AdjustTokenPrivileges(HANDLE TokenHandle, BOOL DisableAllPrivileges, TOKEN_PRIVILEGES* NewState, DWORD BufferLength, TOKEN_PRIVILEGES* PreviousState, PDWORD ReturnLength);
 	HANDLE CreateToolhelp32Snapshot(DWORD dwFlags, DWORD th32ProcessID);
-	BOOL EnumProcessModules(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
 	HWND FindWindowA(LPCSTR lpClassName, LPCSTR lpWindowName);
-	DWORD GetModuleFileNameExA(HANDLE hProcess, HMODULE hModule, LPSTR lpFilename, DWORD nSize);
 	DWORD GetWindowThreadProcessId(HWND hWnd, LPDWORD lpdwProcessId);
-	BOOL LookupPrivilegeValueA(LPCTSTR lpSystemName, LPCTSTR lpName, PLUID lpLuid);
+	BOOL LookupPrivilegeValueA(LPCTSTR lpSystemName, LPCTSTR lpName, LUID* lpLuid);
 	HANDLE OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId);
 	BOOL OpenProcessToken(HANDLE ProcessHandle, DWORD DesiredAccess, PHANDLE TokenHandle);
-	BOOL ReadProcessMemory(HANDLE hProcess, LPCVOID lpBaseAddress, LPVOID lpBuffer, SIZE_T nSize, SIZE_T* lpNumberOfBytesRead);
-	BOOL Thread32First(HANDLE hSnapshot, LPTHREADENTRY32 lpte);
-	BOOL Thread32Next(HANDLE hSnapshot, LPTHREADENTRY32 lpte);
+	BOOL Thread32First(HANDLE hSnapshot, THREADENTRY32* lpte);
+	BOOL Thread32Next(HANDLE hSnapshot, THREADENTRY32* lpte);
 	BOOL WriteProcessMemory(HANDLE hProcess, LPCVOID lpBaseAddress, LPCVOID lpBuffer, SIZE_T nSize, SIZE_T* lpNumberOfBytesWritten);
 
 	immutable void* NULL = cast(void*)0;
 	enum SE_DEBUG_NAME = "SeDebugPrivilege";
 	enum SE_PRIVILEGE_ENABLE = 0x0002;
 	enum TOKEN_ADJUST_PRIVILEGES = 0x0020;
-	enum LIST_MODULES_32BIT = 0x01;
 	enum TH32CS_SNAPTHREAD = 0x00000004;
 	enum
 	{
@@ -68,7 +58,6 @@ extern(Windows)
 	}
 	enum
 	{
-		THREAD_TERMINATE = 0x0001,
 		THREAD_SUSPEND_RESUME = 0x0002, // REQUIRED
 		THREAD_GET_CONTEXT = 0x0008, // REQUIRED
 		THREAD_SET_CONTEXT = 0x0010,
@@ -78,28 +67,28 @@ extern(Windows)
 		THREAD_IMPERSONATE = 0x0100,
 		THREAD_DIRECT_IMPERSONATION = 0x0200,
 	}
-	export void TempMethod()
-	{
-		asm
-		{
-			naked;
-			mov EAX, 0xFFFF;
-			mov EDX, 0xFFFF;
-			push 0xDEADBEEF;
+//	export void TempMethod()
+//	{
+//		asm
+//		{
+//			naked;
+//			mov EAX, 0xFFFF;
+//			mov EDX, 0xFFFF;
+//			push 0xDEADBEEF;
+//
+//			popfd;
+//			//pop 0xDEADBEEF;
+//		}
+//	}
 
-			popfd;
-			//pop 0xDEADBEEF;
-		}
-	}
-
+	// The thunk MUST be written in such a way that
+	// it does not matter where in memory it gets allocated.
 	immutable(immutable(ubyte)[0x0F]) ThunkData =
 	[
 		0x55, // push EBP
 		0x89, 0xE5, // mov EBP, ESP
 		0x51, // push ECX
 		0x52, // push EDX
-		//0xB8, 0xFF, 0xFF, 0xFF, 0xFF, // mov EAX, 0xFFFFFFFF
-		//0xBA, 0xFF, 0xFF, 0xFF, 0xFF, // mov EDX, 0xFFFFFFFF
 
 
 		0x50, // push EAX
@@ -139,7 +128,7 @@ extern(Windows)
 		privileges.Privileges[0].Luid = luid;
 		privileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLE;
 
-		if (!AdjustTokenPrivileges(processToken, FALSE, &privileges, privileges.sizeof, cast(PTOKEN_PRIVILEGES)NULL, cast(PDWORD)NULL))
+		if (!AdjustTokenPrivileges(processToken, FALSE, &privileges, privileges.sizeof, cast(TOKEN_PRIVILEGES*)NULL, cast(PDWORD)NULL))
 			Die("Failed to add the debug privilege!");
 	}
 
