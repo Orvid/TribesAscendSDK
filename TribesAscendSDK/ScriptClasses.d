@@ -99,6 +99,7 @@ static assert(ScriptName.sizeof == 0x08);
 
 extern(C++) public interface ScriptObject // Total size: 0x3C
 {
+extern(D):
 public:
 	@property
 	{
